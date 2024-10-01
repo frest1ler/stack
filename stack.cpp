@@ -1,34 +1,40 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "stack.h"
+#include "stack_push.h"
+#include "stack_pop.h"
+#include "stack_ctor.h"
 
-int stack_push(Stack_t * stack);
-int stack_pop (Stack_t * stack);
+void display_arg(int argc, const char *argv[]);
 
-int main()
+int main(int argc, const char *argv[])
 {
-    Stack_t stack = {0, 0, 100};
+    display_arg(argc, argv);
+
+    Stack_t stack = *stack_ctor();
+
+    set_initial_stack_values(&stack);
 
     stack_push(&stack);
 
-    printf();
+    printf("stack: capacity: %d; size: %d\n", stack.capacity, stack.size);
 
     stack_pop(&stack);
 
+    printf("stack: capacity: %d; size: %d\n", stack.capacity, stack.size);
+
     return 0;
 }
 
-int stack_push(Stack_t * stack)
+void display_arg(int argc, const char *argv[])
 {
-    stack->capacity *= 2;
+    printf("argc = %d\nargv[%d] :", argc, argc);
 
-    stack->data = (stack_elem_t*)calloc(stack->capacity, sizeof(stack_elem_t*));
-
-    return 0;
+    for(int i = 0; i < argc; i++)
+    {
+        printf(" %s", argv[i]);
+    }
+    printf("\n");
 }
 
-int stack_pop (Stack_t * stack)
-{
-    stack->data = (stack_elem_t*)realloc(stack->data, 150);
-
-    return 0;
-}
