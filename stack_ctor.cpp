@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "stack_ctor.h"
+#include "myassert.h"
 
 Stack_t* stack_ctor()
 {
@@ -17,6 +19,9 @@ void set_initial_stack_values(Stack_t * stack)
     stack->right_canary_protection = (stack_elem_t)666;
 
     stack->data = (stack_elem_t*)calloc(stack->capacity + 2, sizeof(stack_elem_t*));
+
+    MYASSERT(stack)
+    
     stack->data[0]                   = CANARY_PROTECTION;
     stack->data[stack->capacity + 1] = CANARY_PROTECTION;
 }

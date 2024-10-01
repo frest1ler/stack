@@ -5,7 +5,7 @@
 
 int stack_pop (Stack_t * stack)
 {
-    myassert(stack);
+    MYASSERT(stack)
 
     stack->capacity = (stack->capacity - 50) / 2;
 
@@ -14,7 +14,7 @@ int stack_pop (Stack_t * stack)
     stack->data[0]                   = CANARY_PROTECTION;
     stack->data[stack->capacity + 1] = CANARY_PROTECTION;
 
-    myassert(stack);
+    MYASSERT(stack)
 
     return 0;
 }

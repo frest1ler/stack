@@ -5,9 +5,9 @@
 
 int stack_push(Stack_t * stack)
 {
-    assert(stack);
+    MYASSERT(stack)
 
-    myassert(stack);
+    MYASSERT(stack)
 
     stack->capacity *= 2;
 
@@ -16,7 +16,7 @@ int stack_push(Stack_t * stack)
     stack->data[0]                   = CANARY_PROTECTION;
     stack->data[stack->capacity + 1] = CANARY_PROTECTION;
 
-    myassert(stack);
+    MYASSERT(stack)
 
     return 0;
 }
