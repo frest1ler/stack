@@ -3,6 +3,6 @@
 
 #include "stack.h"
 
-int stack_pop (Stack_t * stack);
+stack_elem_t stack_pop (Stack_t * stack);
 
 #endif /*STACK_POP_H*/

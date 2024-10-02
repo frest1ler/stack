@@ -3,18 +3,25 @@
 #include "stack_pop.h"
 #include "myassert.h"
 
-int stack_pop (Stack_t * stack)
+stack_elem_t stack_pop (Stack_t * stack)
 {
-    MYASSERT(stack)
+    myassert(ASSERT);
 
-    stack->capacity = (stack->capacity - 50) / 2;
+    if (stack->size < (stack->capacity - 50) / 2)
+    {
+        stack->capacity = (stack->capacity - 50) / 2;
 
-    stack->data = (stack_elem_t*)realloc(stack->data, stack->capacity + 2);
+        stack->data = (stack_elem_t*)realloc(stack->data, stack->capacity + 2);
+    }
+    stack_elem_t removed_value = stack->data[stack->size + 1];
 
-    stack->data[0]                   = CANARY_PROTECTION;
-    stack->data[stack->capacity + 1] = CANARY_PROTECTION;
+    stack->data[stack->size + 1] = 0;
 
-    MYASSERT(stack)
+    stack->size--;
 
-    return 0;
+    myassert(ASSERT);
+
+    printf("stack: capacity: %d; size: %d\n", stack->capacity, stack->size);
+
+    return removed_value;
 }

@@ -3,20 +3,25 @@
 #include "myassert.h"
 #include "stack_push.h"
 
-int stack_push(Stack_t * stack)
+int stack_push(Stack_t * stack, stack_elem_t added_value)
 {
-    MYASSERT(stack)
+    myassert(ASSERT);
 
-    MYASSERT(stack)
+    if (stack->size >= stack->capacity)
+    {
+        stack->capacity *= 2;
 
-    stack->capacity *= 2;
+        stack->data = (stack_elem_t*)realloc(stack->data, (stack->capacity + 2) * sizeof(stack_elem_t));
 
-    stack->data = (stack_elem_t*)realloc(stack->data, stack->capacity + 2);
+        myassert(ASSERT);
+    }
+    stack->data[stack->size + 1] = added_value;
 
-    stack->data[0]                   = CANARY_PROTECTION;
-    stack->data[stack->capacity + 1] = CANARY_PROTECTION;
+    stack->size++;
 
-    MYASSERT(stack)
+    myassert(ASSERT);
+
+    printf("stack: capacity: %d; size: %d\n", stack->capacity, stack->size);
 
     return 0;
 }

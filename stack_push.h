@@ -3,6 +3,6 @@
 
 #include "stack.h"
 
-int stack_push(Stack_t * stack);
+int stack_push(Stack_t * stack, stack_elem_t added_value);
 
 #endif /*STACK_PUSH_H*/

@@ -20,8 +20,8 @@ void set_initial_stack_values(Stack_t * stack)
 
     stack->data = (stack_elem_t*)calloc(stack->capacity + 2, sizeof(stack_elem_t*));
 
-    MYASSERT(stack)
-    
+    myassert(ASSERT);
+
     stack->data[0]                   = CANARY_PROTECTION;
     stack->data[stack->capacity + 1] = CANARY_PROTECTION;
 }
