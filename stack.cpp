@@ -5,7 +5,6 @@
 #include "stack_push.h"
 #include "stack_pop.h"
 #include "stack_ctor.h"
-#include "communication_with_user.h"
 
 int main()
 {
@@ -14,15 +13,15 @@ int main()
 
     set_initial_stack_values(&stack);
 
-    ui_ask_for_push_or_pop(&stack);
+    for(int i = 1; i <= 30; i++)
+    {
+        stack_push(&stack, 1);
+    }
 
-    //stack_push(&stack);
-
-    printf("stack: capacity: %d; size: %d\n", stack.capacity, stack.size);
-
-    //stack_pop(&stack);
-
-    //printf("stack: capacity: %d; size: %d\n", stack.capacity, stack.size);
+    for(int i = 1; i <= 25; i++)
+    {
+        stack_pop(&stack);
+    }
 
     return 0;
 }

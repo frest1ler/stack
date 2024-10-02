@@ -12,5 +12,6 @@ struct Stack_t
     stack_elem_t  right_canary_protection;
 };
 
-const stack_elem_t CANARY_PROTECTION = 666;
+const stack_elem_t CANARY_PROTECTION =  666;
+const stack_elem_t POISON            = -333;
 #endif /*STACK_H*/
