@@ -8,20 +8,22 @@
 
 int main()
 {
+    Stack_t stack = *get_poiter_stack();
 
-    Stack_t stack = *stack_ctor();
+    stack_ctor(&stack);
 
-    set_initial_stack_values(&stack);
-
-    for(int i = 1; i <= 30; i++)
+    for(int i = 1; i <= 300; i++)
     {
-        stack_push(&stack, 1);
+        stack_push(&stack, i);
+        printf("\nstack: capacity: %d; size: %d\n", stack.capacity, stack.size);
     }
 
-    for(int i = 1; i <= 25; i++)
+    for(int i = 1; i <= 302; i++)
     {
-        stack_pop(&stack);
+        stack_pop(&stack); //TODO stack_dtor
+        printf("\nstack: capacity: %d; size: %d\n", stack.capacity, stack.size);
     }
 
     return 0;
 }
+

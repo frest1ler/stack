@@ -1,115 +1,69 @@
 #include <stdio.h>
 #include <assert.h>
 #include "myassert.h"
+#include "dump.h"
+
+int  stack_error(Stack_t * stack);
+void display_error(Stack_t * stack, int error, const char* file, int line);
 
 int myassert(Stack_t * stack, const char* file, int line)
 {
     int error = stack_error(stack);
-    if (error & 1)
+
+    if (error == 0)
     {
-        printf("file: %s; line: %d\n"
-               "stack->left_canary_protection != CANARY_PROTECTION\n", file, line); //TODO прекратить хуйню
+        return 0;
     }
-    if (error & 2)
-    {
-        printf("file: %s; line: %d\nstack->data == NULL\n", file, line);
-    }
-    if (error & 4)
-    {
-        printf("file: %s; line: %d\nstack->capacity == 0\n", file, line);
-    }
-    if (error & 8)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->right_canary_protection != CANARY_PROTECTION\n", file, line);
-    }
-    if (error & 16)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->size < 0\n", file, line);
-    }
-    if (error & 32)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->capacity <= 0\n", file, line);
-    }
-    if (error & 64)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->left_canary_protection != CANARY_PROTECTION\n", file, line);
-    }
-    if (error & 128)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->right_canary_protection != CANARY_PROTECTION\n", file, line);
-    }
-    if (error & 256)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->data[0] != CANARY_PROTECTION\n", file, line);
-    }
-    if (error & 512)
-    {
-        printf("file: %s; line: %d\n"
-               "stack->data[stack->capacity + 1] != CANARY_PROTECTION\n", file, line);
-    }
-    for(int i = 1; stack->size + i < stack->capacity + 1; i++)
-    {
-        if (stack->data[stack->size + i] != POISON)
-        {
-            printf("file: %s; line: %d\n"
-                   "stack->data[%d] != POISON\n"
-                   "stack->data[%d] = %lf\n", file, line, stack->size + i, stack->data[stack->size + i]);
-        }
-    }
+
+    display_error(stack, error, file, line);
+
     return 0;
 }
 
-int stack_error(Stack_t * stack)
+int stack_error(Stack_t * stack) //TODO rename
 {
-    assert(stack);
+    assert(stack); //TODO отключаемые assert-ы, условная компиляция
 
     int error = 0;
 
-    if (stack->left_canary_protection != CANARY_PROTECTION)
-    {
-        error += 1;
-    }
-    if (stack->data == NULL)
-    {
-        error += 2;
-    }
-    if (stack->capacity == 0)
-    {
-        error += 4;
-    }
-    if (stack->right_canary_protection != CANARY_PROTECTION)
-    {
-        error +=8;
-    }
-    if (stack->size < 0)
-    {
-        error +=16;
-    }
-    if (stack->capacity <= 0)
-    {
-        error +=32;
-    }
-    if (stack->left_canary_protection != CANARY_PROTECTION)
-    {
-        error +=64;
-    }
-    if (stack->right_canary_protection != CANARY_PROTECTION)
-    {
-        error +=128;
-    }
-    if (stack->data[0] != CANARY_PROTECTION)
-    {
-        error +=256;
-    }
-    if (stack->data[stack->capacity + 1] != CANARY_PROTECTION)
-    {
-        error +=512;
-    }
+    LEFT_CANARY_STRUCT_NOT_EQUAL_TO_STANDARD
+
+    STACK_DATA_IS_NULL
+
+    NEGATIVE_CAPACITY
+
+    RIGHT_CANARY_STRUCT_NOT_EQUAL_TO_STANDART
+
+    NEGATIVE_SIZE
+
+    LEFT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
+
+    RIGHT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
+
     return error;
+}
+
+void display_error(Stack_t * stack, int error, const char* file, int line)
+{
+    assert(error);
+
+    printf("file: %s; line: %d\n", file, line);
+
+    OUTPUT_LEFT_CANARY_STRUCT_NOT_EQUAL_TO_STANDARD
+
+    OUTPUT_STACK_DATA_IS_NULL
+
+    OUTPUT_NEGATIVE_CAPACITY
+
+    OUTPUT_RIGHT_CANARY_STRUCT_NOT_EQUAL_TO_STANDART
+
+    OUTPUT_NEGATIVE_SIZE
+
+    OUTPUT_LEFT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
+
+    OUTPUT_RIGHT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
+
+    OUTPUT_EMPTY_ELEMENT_NOT_POISONOUS
+
+    dump(stack);
 }

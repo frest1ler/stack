@@ -3,7 +3,7 @@
 
 #include "stack.h"
 
-Stack_t* stack_ctor();
-void     set_initial_stack_values(Stack_t * stack);
+Stack_t* get_poiter_stack();
+void     stack_ctor(Stack_t * stack);
 
 #endif /*STACK_CTOR_H*/

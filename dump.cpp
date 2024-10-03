@@ -4,16 +4,12 @@
 
 int dump(Stack_t * stack)
 {
-    myassert(ASSERT);
-
-    for(int j = 0; j < stack->capacity + 2; j++)
+    for(int j = -1; j <= stack->capacity; j++)
     {
-        printf("%0.lf ", stack->data[j]);
+        printf("%0.lf(%d) ", *(stack->data + j), j + 2);
     }
 
     printf("\nstack: capacity: %d; size: %d\n", stack->capacity, stack->size);
-
-    myassert(ASSERT);
 
     return 0;
 }

@@ -4,26 +4,18 @@
 #include "stack_push.h"
 #include "dump.h"
 
+void increase_size(Stack_t * stack);
+
 int stack_push(Stack_t * stack, stack_elem_t added_value)
 {
     myassert(ASSERT);
 
     if (stack->size >= stack->capacity)
     {
-        stack->capacity *= 2;
-
-        stack->data = (stack_elem_t*)realloc(stack->data, (stack->capacity + 2) * sizeof(stack_elem_t));
-
-        for(int i = 1; stack->size + i < stack->capacity + 1; i++)
-        {
-            stack->data[stack->size + i] = POISON;
-        }
-        stack->data[stack->capacity + 1] = CANARY_PROTECTION;
-
-        myassert(ASSERT);
+        increase_size(stack);
     }
-    stack->data[stack->size + 1] = added_value;
 
+    stack->data[stack->size] = added_value;
     stack->size++;
 
     myassert(ASSERT);
@@ -31,4 +23,21 @@ int stack_push(Stack_t * stack, stack_elem_t added_value)
     //dump(stack);
 
     return 0;
+}
+
+void increase_size(Stack_t * stack)
+{
+    stack->capacity *= CAPACITY_GROWTH_RATE;
+
+    stack_elem_t* array = (stack_elem_t*)realloc(stack->data - 1,
+                                                 stack->capacity * sizeof(stack_elem_t) +
+                                                 NUM_ARRAY_CANARY * sizeof(double));
+    stack->data = array + 1;
+    for(int i = 0; stack->size + i < stack->capacity; i++) //TODO memset or func
+    {
+        stack->data[stack->size + i] = POISON;
+    }
+    *(stack->data + stack->capacity) = CANARY_PROTECTION;
+
+    myassert(ASSERT);
 }
