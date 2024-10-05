@@ -12,13 +12,13 @@ int main()
 
     stack_ctor(&stack);
 
-    for(int i = 1; i <= 300; i++)
+    for(int i = 1; i <= 30; i++)
     {
         stack_push(&stack, i);
         printf("\nstack: capacity: %d; size: %d\n", stack.capacity, stack.size);
     }
 
-    for(int i = 1; i <= 302; i++)
+    for(int i = 1; i <= 32; i++)
     {
         stack_pop(&stack); //TODO stack_dtor
         printf("\nstack: capacity: %d; size: %d\n", stack.capacity, stack.size);

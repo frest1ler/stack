@@ -5,6 +5,9 @@
 
 typedef double stack_elem_t; //TODO спецификатор ввывода через дефайн
 
+//#define CANARY_SPECIFIER %lf
+//#define STACK_SPECIFIER  %lf
+
 struct Stack_t
 {
     stack_elem_t  left_canary_protection ; //TODO отключаемы канарейки

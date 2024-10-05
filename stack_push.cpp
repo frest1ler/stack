@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #include "myassert.h"
 #include "stack_push.h"
 #include "dump.h"
 
 void increase_size(Stack_t * stack);
+void fill_memory(Stack_t * stack);
 
 int stack_push(Stack_t * stack, stack_elem_t added_value)
 {
@@ -20,7 +22,7 @@ int stack_push(Stack_t * stack, stack_elem_t added_value)
 
     myassert(ASSERT);
 
-    //dump(stack);
+    dump(stack);
 
     return 0;
 }
@@ -33,11 +35,18 @@ void increase_size(Stack_t * stack)
                                                  stack->capacity * sizeof(stack_elem_t) +
                                                  NUM_ARRAY_CANARY * sizeof(double));
     stack->data = array + 1;
-    for(int i = 0; stack->size + i < stack->capacity; i++) //TODO memset or func
+
+    fill_memory(stack);
+
+    myassert(ASSERT);
+}
+
+void fill_memory(Stack_t * stack)
+{
+    for(int i = 0; stack->size + i < stack->capacity; i++)
     {
         stack->data[stack->size + i] = POISON;
     }
-    *(stack->data + stack->capacity) = CANARY_PROTECTION;
 
-    myassert(ASSERT);
+    *(stack->data + stack->capacity) = CANARY_PROTECTION;
 }
