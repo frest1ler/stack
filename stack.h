@@ -18,9 +18,9 @@ struct Stack_t
 };  //TODO  отключаемые канарейки, dump, отладочную инфу, хэш
 
 const stack_elem_t CANARY_PROTECTION    =  987654321;
-const stack_elem_t POISON               = -333      ;
-const int          INITIAL_CAPACITY     =  10       ;
+const stack_elem_t POISON               = -333      ; //TODO NAN
+const int          INITIAL_CAPACITY     =  10       ; //TODO size_t
 const int          INITIAL_SIZE         =  0        ;
-const int          NUM_ARRAY_CANARY     =  2        ;
+const int          NUM_ARRAY_CANARY     =  2        ; //TODO rename Canry_array
 const int          CAPACITY_GROWTH_RATE =  2        ;
 #endif /*STACK_H*/

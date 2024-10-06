@@ -6,7 +6,7 @@
 int  stack_error(Stack_t * stack);
 void display_error(Stack_t * stack, int error, const char* file, int line);
 
-int myassert(Stack_t * stack, const char* file, int line)
+int myassert(Stack_t * stack, const char* file, int line) //TODO verify, check
 {
     int error = stack_error(stack);
 
@@ -26,7 +26,19 @@ int stack_error(Stack_t * stack) //TODO rename
 
     int error = 0;
 
-    LEFT_CANARY_STRUCT_NOT_EQUAL_TO_STANDARD
+    // #define CHECK_ERROR_ (error_if, error_value)            \
+    // do                                                      \
+    // {                                                       \
+    //     if (error_if)                                       \
+    //     {                                                   \
+    //         error += error_value;                           \
+    //     }                                                   \
+    //                                                         \
+    // } while(0)
+
+    // CHECK_ERROR_ (stack->left_canary_protection != CANARY_PROTECTION, 1);
+    // CHECK_ERROR_ (stack->data == NULL, 2); //TODO enum for errors
+
 
     STACK_DATA_IS_NULL
 
@@ -39,6 +51,8 @@ int stack_error(Stack_t * stack) //TODO rename
     LEFT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
 
     RIGHT_CANARY_DATA_NOT_EQUAL_TO_STANDARD
+
+    //#undef CHECK_ERROR_
 
     return error;
 }

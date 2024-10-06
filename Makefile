@@ -20,5 +20,6 @@ $(TARGET) : $(OBJ)
 %.o : %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+.PHONY: clean
 clean:
 	del $(TARGET) *.o

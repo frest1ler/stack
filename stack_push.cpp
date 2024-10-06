@@ -1,52 +1,23 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include "working_with_data.h"
 #include "myassert.h"
 #include "stack_push.h"
 #include "dump.h"
-
-void increase_size(Stack_t * stack);
-void fill_memory(Stack_t * stack);
 
 int stack_push(Stack_t * stack, stack_elem_t added_value)
 {
     myassert(ASSERT);
 
-    if (stack->size >= stack->capacity)
-    {
-        increase_size(stack);
-    }
+    check_capacity(stack);
 
     stack->data[stack->size] = added_value;
     stack->size++;
 
     myassert(ASSERT);
 
-    dump(stack);
+    //dump(stack);
 
     return 0;
-}
-
-void increase_size(Stack_t * stack)
-{
-    stack->capacity *= CAPACITY_GROWTH_RATE;
-
-    stack_elem_t* array = (stack_elem_t*)realloc(stack->data - 1,
-                                                 stack->capacity * sizeof(stack_elem_t) +
-                                                 NUM_ARRAY_CANARY * sizeof(double));
-    stack->data = array + 1;
-
-    fill_memory(stack);
-
-    myassert(ASSERT);
-}
-
-void fill_memory(Stack_t * stack)
-{
-    for(int i = 0; stack->size + i < stack->capacity; i++)
-    {
-        stack->data[stack->size + i] = POISON;
-    }
-
-    *(stack->data + stack->capacity) = CANARY_PROTECTION;
 }
