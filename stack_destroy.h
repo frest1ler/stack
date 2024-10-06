@@ -3,6 +3,6 @@
 
 #include "stack.h"
 
-void stack_destroy(stack_elem_t* data);
+void stack_destroy(Stack_t * stack);
 
 #endif /*STACK_DESTROY_H*/

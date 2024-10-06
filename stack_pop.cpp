@@ -7,7 +7,7 @@
 
 stack_elem_t stack_pop (Stack_t * stack)
 {
-    myassert(ASSERT);
+    verify(ASSERT);
 
     stack_elem_t return_value = 0;
 
@@ -17,14 +17,15 @@ stack_elem_t stack_pop (Stack_t * stack)
 
     check_capacity(stack);
 
-    return_value = stack->data[stack->size];
+    return_value = stack->data[stack->size - 1];
+
+    stack->expected_hash_sum -= return_value;
 
     stack->data[stack->size] = POISON;
 
-    stack->size--; //TODO dtor
+    stack->size--;
 
-
-    myassert(ASSERT);
+    verify(ASSERT);
 
     //dump(stack);
 

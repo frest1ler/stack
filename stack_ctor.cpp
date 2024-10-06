@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "working_with_data.h"
 #include "stack_ctor.h"
 #include "myassert.h"
 
@@ -15,22 +16,21 @@ void stack_ctor(Stack_t * stack)
 {
     assert(stack);
 
-    stack->capacity                = INITIAL_CAPACITY ;
-    stack->size                    = INITIAL_SIZE     ;
-    stack->left_canary_protection  = CANARY_PROTECTION; //TODO сделать разные значения
-    stack->right_canary_protection = CANARY_PROTECTION;
+    stack->capacity                = INITIAL_CAPACITY   ;
+    stack->size                    = INITIAL_SIZE       ;
+    stack->hash_sum                = INITIAL_HASH_SUM   ;
+    stack->expected_hash_sum       = INITIAL_HASH_SUM   ;
+    stack->left_canary_protection  = CANARY_PROTECTION_1; //TODO сделать разные значения
+    stack->right_canary_protection = CANARY_PROTECTION_2;
 
-    stack_elem_t* array = (stack_elem_t*)calloc(stack->capacity + NUM_ARRAY_CANARY, sizeof(stack_elem_t*)); //TODO
+    stack_elem_t* array = (stack_elem_t*)calloc(stack->capacity + NUM_CANARY_ARRAY, sizeof(stack_elem_t*)); //TODO
 
-    *array                         = CANARY_PROTECTION;
-    *(array + stack->capacity + 1) = CANARY_PROTECTION;
+    *array                         = CANARY_PROTECTION_3;
+    *(array + stack->capacity + 1) = CANARY_PROTECTION_4;
 
     stack->data = array + 1;
 
-    for(int i = 0; i < stack->capacity; i++) //TODO Func
-    {
-        stack->data[i] = POISON;
-    }
+    pour_poison_into_empty(stack->data, stack->size, stack->capacity);
 
-    myassert(ASSERT); //TODO myassert is macro define not func
+    verify(ASSERT); //TODO myassert is macro define not func
 }

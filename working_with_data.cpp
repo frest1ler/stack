@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include "working_with_data.h"
-#include "stack_destroy.h"
 #include "myassert.h"
-
-void pour_poison_into_empty(stack_elem_t* data, int size, int capacity);
 
 void check_capacity(Stack_t * stack)
 {
@@ -26,19 +23,18 @@ void check_capacity(Stack_t * stack)
 
     stack_elem_t* array = (stack_elem_t*)realloc(stack->data - 1,
                                                  stack->capacity * sizeof(stack_elem_t) +
-                                                 NUM_ARRAY_CANARY * sizeof(double));
-    stack_destroy(stack->data - 1);
+                                                 NUM_CANARY_ARRAY * sizeof(double));
 
     stack->data = array + 1;
 
-    *(stack->data + stack->capacity) = CANARY_PROTECTION;
+    *(stack->data + stack->capacity) = CANARY_PROTECTION_4;
 
     if (fill_poison)
     {
         pour_poison_into_empty(stack->data, stack->size, stack->capacity);
     }
 
-    myassert(ASSERT);
+    verify(ASSERT);
 }
 
 void pour_poison_into_empty(stack_elem_t* data, int size, int capacity)

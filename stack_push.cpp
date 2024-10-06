@@ -8,14 +8,16 @@
 
 int stack_push(Stack_t * stack, stack_elem_t added_value)
 {
-    myassert(ASSERT);
+    verify(ASSERT);
 
     check_capacity(stack);
 
     stack->data[stack->size] = added_value;
     stack->size++;
 
-    myassert(ASSERT);
+    stack->expected_hash_sum += added_value;
+
+    verify(ASSERT);
 
     //dump(stack);
 

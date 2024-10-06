@@ -1,11 +1,14 @@
 #include <stdlib.h>
 #include "stack_destroy.h"
 
-void stack_destroy(stack_elem_t* data)
+void stack_destroy(Stack_t * stack)
 {
-    if (data != 0)
+    if (stack->data - 1 != NULL)
     {
-        free(data);
+        free(stack->data - 1);
     }
-
+    if (stack != NULL)
+    {
+        free(stack);
+    }
 }
