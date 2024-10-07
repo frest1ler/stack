@@ -19,7 +19,7 @@ int stack_push(Stack_t * stack, stack_elem_t added_value)
 
     verify(ASSERT);
 
-    //dump(stack);
+    dump(stack);
 
     return 0;
 }

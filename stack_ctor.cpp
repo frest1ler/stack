@@ -20,10 +20,11 @@ void stack_ctor(Stack_t * stack)
     stack->size                    = INITIAL_SIZE       ;
     stack->hash_sum                = INITIAL_HASH_SUM   ;
     stack->expected_hash_sum       = INITIAL_HASH_SUM   ;
-    stack->left_canary_protection  = CANARY_PROTECTION_1; //TODO сделать разные значения
+    stack->left_canary_protection  = CANARY_PROTECTION_1;
     stack->right_canary_protection = CANARY_PROTECTION_2;
 
-    stack_elem_t* array = (stack_elem_t*)calloc(stack->capacity + NUM_CANARY_ARRAY, sizeof(stack_elem_t*)); //TODO
+    stack_elem_t* array = (stack_elem_t*)calloc(stack->capacity * sizeof(stack_elem_t)
+                                                + NUM_CANARY_ARRAY * sizeof(double), 1);
 
     *array                         = CANARY_PROTECTION_3;
     *(array + stack->capacity + 1) = CANARY_PROTECTION_4;

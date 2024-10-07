@@ -4,12 +4,12 @@
 #include "stack_destroy.h"
 #include "dump.h"
 
-int  stack_error(Stack_t * stack);
+int  collect_error(Stack_t * stack);
 void display_error(Stack_t * stack, int error, const char* file, int line);
 
 int verify(Stack_t * stack, const char* file, int line)
 {
-    int error = stack_error(stack);
+    int error = collect_error(stack);
 
     if (error == 0)
     {
@@ -23,9 +23,9 @@ int verify(Stack_t * stack, const char* file, int line)
     return 0;
 }
 
-int stack_error(Stack_t * stack) //TODO rename
+int collect_error(Stack_t * stack)
 {
-    assert(stack); //TODO отключаемые assert-ы, условная компиляция
+    assert(stack);
 
     int error = 0;
 
@@ -90,7 +90,7 @@ void display_error(Stack_t * stack, int error, const char* file, int line)
         {
             printf("file: %s; line: %d\n"
                    "stack->data[%d] != POISON\n"
-                   "stack->data[%d] = %lf\n",
+                   "stack->data[%d] = " STACK_SPECIFIER"\n",
                    file, line, stack->size + i, stack->size + i, stack->data[stack->size + i]);
         }
     }
