@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <math.h>
 #include "working_with_data.h"
 #include "myassert.h"
 #include "stack_push.h"
@@ -15,11 +16,11 @@ int stack_push(Stack_t * stack, stack_elem_t added_value)
     stack->data[stack->size] = added_value;
     stack->size++;
 
-    stack->expected_hash_sum += added_value;
+    stack->etalon_hash_sum = hash(stack->data, stack->size);
 
     verify(ASSERT);
 
-    dump(stack);
+    //dump(stack);
 
     return 0;
 }

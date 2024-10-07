@@ -44,3 +44,16 @@ void pour_poison_into_empty(stack_elem_t* data, int size, int capacity)
         data[size + i] = POISON;
     }
 }
+
+unsigned long hash(void* array, size_t size)
+{
+    unsigned long hash = 5381;
+
+    unsigned char* byte_array = (unsigned char*)array;
+
+    for(size_t i = 0; i < size; i++)
+    {
+        hash = ((hash << 5) + hash) + byte_array[i];
+    }
+    return hash;
+}

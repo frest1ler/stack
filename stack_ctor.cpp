@@ -18,8 +18,8 @@ void stack_ctor(Stack_t * stack)
 
     stack->capacity                = INITIAL_CAPACITY   ;
     stack->size                    = INITIAL_SIZE       ;
+    stack->etalon_hash_sum         = INITIAL_HASH_SUM   ;
     stack->hash_sum                = INITIAL_HASH_SUM   ;
-    stack->expected_hash_sum       = INITIAL_HASH_SUM   ;
     stack->left_canary_protection  = CANARY_PROTECTION_1;
     stack->right_canary_protection = CANARY_PROTECTION_2;
 

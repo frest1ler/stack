@@ -5,7 +5,7 @@
 
 #define ASSERT stack,__FILE__,__LINE__ //TODO rename
 
-int verify(Stack_t * stack, const char* file, int line);
+void verify(Stack_t * stack, const char* file, int line);
 int stack_error(Stack_t * stack);
 
 enum ERROR_VALUE

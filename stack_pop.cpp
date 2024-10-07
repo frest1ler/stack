@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 #include "working_with_data.h"
 #include "stack_pop.h"
 #include "myassert.h"
@@ -19,15 +20,15 @@ stack_elem_t stack_pop (Stack_t * stack)
 
     return_value = stack->data[stack->size - 1];
 
-    stack->expected_hash_sum -= return_value;
-
-    stack->data[stack->size] = POISON;
+    stack->data[stack->size - 1] = POISON;
 
     stack->size--;
 
+    stack->etalon_hash_sum = hash(stack->data, stack->size);
+
     verify(ASSERT);
 
-    dump(stack);
+    //dump(stack);
 
     return return_value;
 }
