@@ -6,6 +6,8 @@
 #include "stack_destroy.h"
 #include "dump.h"
 
+const char* const RED = "\033[31m";
+
 int  collect_error(Stack_t * stack);
 void display_error(Stack_t * stack, int error, const char* file, int line);
 //void hash(Stack_t * stack);
@@ -49,12 +51,6 @@ int collect_error(Stack_t * stack)
     CHECK_ERROR_(INCORRECT_VALUE_LEFT_CANARY_ARRAY  , *(stack->data - 1) != CANARY_PROTECTION_3              );
     CHECK_ERROR_(INCORRECT_VALUE_RIGHT_CANARY_ARRAY , *(stack->data + stack->capacity) != CANARY_PROTECTION_4);
 
-    //stack->hash_sum = 0;
-
-    // for(int i = 1; i <= stack->size; i++)
-    // {
-    //     stack->hash_sum += stack->data[i - 1]; //TODO func
-    // }
     stack->hash_sum = hash(stack->data, stack->size);
 
     CHECK_ERROR_(HASH_AMOUNT_MISMATCH, stack->hash_sum != stack->etalon_hash_sum);
@@ -79,14 +75,16 @@ void display_error(Stack_t * stack, int error, const char* file, int line)
         }                                            \
     } while(0)
 
-    OUTPUT_ERROR_(INCORRECT_VALUE_LEFT_CANARY_STRUCT , "stack->left_canary_protection != CANARY_PROTECTION_1\n" );
-    OUTPUT_ERROR_(NULL_POINTER_DATA                  , "stack->data == NULL\n"                                  );
-    OUTPUT_ERROR_(NEGATIVE_CAPACITY                  , "stack->capacity <= 0\n"                                 );
-    OUTPUT_ERROR_(INCORRECT_VALUE_RIGHT_CANARY_STRUCT, "stack->right_canary_protection != CANARY_PROTECTION_2\n");
-    OUTPUT_ERROR_(NEGATIVE_SIZE                      , "stack->size < 0\n"                                      );
-    OUTPUT_ERROR_(INCORRECT_VALUE_LEFT_CANARY_ARRAY  , "*(stack->data - 1) != CANARY_PROTECTION_3\n"            );
-    OUTPUT_ERROR_(INCORRECT_VALUE_RIGHT_CANARY_ARRAY , "stack->data[capacity + 1] != CANARY_PROTECTION_4\n*"    );
-    OUTPUT_ERROR_(HASH_AMOUNT_MISMATCH               , "stack->hash_sum != stack->expected_hash_sum\n"          );
+    set_text_color(12);
+
+    OUTPUT_ERROR_(INCORRECT_VALUE_LEFT_CANARY_STRUCT , "left_canary_protection != CANARY_PROTECTION_1\n" );
+    OUTPUT_ERROR_(NULL_POINTER_DATA                  , "stack->data == NULL\n"                           );
+    OUTPUT_ERROR_(NEGATIVE_CAPACITY                  , "stack->capacity <= 0\n"                          );
+    OUTPUT_ERROR_(INCORRECT_VALUE_RIGHT_CANARY_STRUCT, "right_canary_protection != CANARY_PROTECTION_2\n");
+    OUTPUT_ERROR_(NEGATIVE_SIZE                      , "stack->size < 0\n"                               );
+    OUTPUT_ERROR_(INCORRECT_VALUE_LEFT_CANARY_ARRAY  , " *(stack->data - 1) != CANARY_PROTECTION_3\n"    );
+    OUTPUT_ERROR_(INCORRECT_VALUE_RIGHT_CANARY_ARRAY , "data[capacity + 1] != CANARY_PROTECTION_4\n*"    );
+    OUTPUT_ERROR_(HASH_AMOUNT_MISMATCH               , "stack->hash_sum != stack->expected_hash_sum\n"   );
 
     for(int i = 1; stack->size + i < stack->capacity; i++)
     {
@@ -99,17 +97,11 @@ void display_error(Stack_t * stack, int error, const char* file, int line)
         }
     }
 
+    set_text_color(7);
+
     dump(stack);
 
     #undef OUTPUT_ERROR_
 }
-// void hash(Stack_t * stack)
-// {
-//     stack->hash_sum = 5381;
-//
-//     for(int i = 1; i <= stack->size; i++)
-//     {
-//         stack->hash_sum += 33^stack->data[i - 1];
-//     }
-// }
+
 

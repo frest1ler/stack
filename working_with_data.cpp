@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <windows.h>
 #include "working_with_data.h"
 #include "myassert.h"
 
@@ -56,4 +57,19 @@ unsigned long hash(void* array, size_t size)
         hash = ((hash << 5) + hash) + byte_array[i];
     }
     return hash;
+}
+
+void set_text_color(int color)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleTextAttribute(hConsole, color);
+}
+
+int glue_into_double(void* number)
+{
+    for(size_t i = 0; i < ; i++)
+    {
+
+    }
 }

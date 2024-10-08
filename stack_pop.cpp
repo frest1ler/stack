@@ -28,7 +28,7 @@ stack_elem_t stack_pop (Stack_t * stack)
 
     verify(ASSERT);
 
-    //dump(stack);
+    dump(stack);
 
     return return_value;
 }

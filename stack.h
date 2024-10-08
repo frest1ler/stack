@@ -3,10 +3,10 @@
 
 #define GIVEN_PART(x) ((x)-50)/2
 
-typedef double stack_elem_t;
+typedef int stack_elem_t;
 
 #define CANARY_SPECIFIER "%lf"
-#define STACK_SPECIFIER  "%lf"
+#define STACK_SPECIFIER  "%d"
 
 struct Stack_t
 {
@@ -23,7 +23,7 @@ const double        CANARY_PROTECTION_1  =  987654321;
 const double        CANARY_PROTECTION_2  = -987654321;
 const double        CANARY_PROTECTION_3  =  123456789;
 const double        CANARY_PROTECTION_4  = -123456789;
-const stack_elem_t  POISON               = -333      ; //TODO NAN
+const stack_elem_t  POISON               = -333      ;
 const unsigned long INITIAL_HASH_SUM     =  5381     ;
 const int           INITIAL_CAPACITY     =  10       ; //TODO size_t
 const int           INITIAL_SIZE         =  0        ;
